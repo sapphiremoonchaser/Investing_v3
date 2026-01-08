@@ -16,7 +16,15 @@ class FilterRule(BaseModel):
     operator: Operator
     value: float | int
 
+    # Good for human readability
     def __str__(self) -> str:
         return f'{self.field} {self.operator} {self.value}'
 
+    # Good for debugging
+    def __repr__(self) -> str:
+        return (
+            f"FilterRule(field={self.field!r}, "
+            f"operator={self.operator!r}, "
+            f"value={self.value!r})"
+        )
 
