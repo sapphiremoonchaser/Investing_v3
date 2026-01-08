@@ -1,5 +1,5 @@
 [project]
-name = "trading_analytics"
+name = "stock_screener"
 version = "1.0.0.0"
 requires-python = ">=3.10"
 dependencies = [
@@ -30,4 +30,4 @@ where = ["src"]
 [tool.pytest.ini_options]
 python_files = "test_*.py"
 testpaths = ["tests"]
-addopts = "-v --cov=src/trading_analytics --cov-report=html"
+addopts = "-v --cov=src/stock_screener --cov-report=html"
