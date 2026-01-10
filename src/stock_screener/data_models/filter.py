@@ -1,12 +1,24 @@
 """Pydantic Class for custom filter rules.
 """
+import operator
 from typing import Literal
+
+import pandas as pd
 from pydantic import (
     BaseModel,
     Field
 )
 
 Operator = Literal['>', '<', '>=', '<=', '==']
+
+# This is for the pandas mask
+OPS = {
+    ">": operator.gt,
+    "<": operator.lt,
+    ">=": operator.ge,
+    "<=": operator.le,
+    "==": operator.eq,
+}
 
 class FilterRule(BaseModel):
     field: str = Field(
@@ -31,3 +43,20 @@ class FilterRule(BaseModel):
             f"value={self.value!r})"
         )
 
+    def to_pandas_mask(
+        self,
+        df: pd.DataFrame,
+    ):
+        """This allows each rule to become a boolean mask.
+            Operator symbols like <, >=, etc. are changed to
+            something more friendly for Pandas (such as
+            operator.lt, operator.ge, etc.
+
+            See 'OPS' object above for the mapping.
+        :param df:
+        :return:
+        """
+        return OPS[self.operator](
+            df[self.field],
+            self.value
+        )
