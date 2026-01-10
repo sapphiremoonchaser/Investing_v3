@@ -60,3 +60,15 @@ class FilterRule(BaseModel):
             df[self.field],
             self.value
         )
+
+    def label(self) -> str:
+        # Percentage formatting with 0 decimal places
+        if self.field == 'dividend_yield':
+            return f"Dividend Yield {self.operator} {self.value:.0%}"
+
+        # Metrics in Billions of $
+        if self.field == 'market_cap':
+            return f"Market Cap {self.operator} {self.value/1e9:.1f}B"
+
+        # Anything else, just remove the '_' and repalce with blank space
+        return f"{self.field.replace('_', ' ').title()} {self.operator} {self.value}"
