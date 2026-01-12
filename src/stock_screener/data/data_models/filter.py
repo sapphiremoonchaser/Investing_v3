@@ -9,6 +9,8 @@ from pydantic import (
     Field
 )
 
+from stock_screener.data.enum.stock_field import StockField
+
 Operator = Literal['>', '<', '>=', '<=', '==']
 
 # This is for the pandas mask
@@ -21,10 +23,7 @@ OPS = {
 }
 
 class FilterRule(BaseModel):
-    field: str = Field(
-        ...,
-        description='Stock Market Metric Name',
-    )
+    field: StockField
     operator: Operator
     value: float | int
 
