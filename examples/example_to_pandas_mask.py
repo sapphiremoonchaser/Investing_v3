@@ -1,4 +1,4 @@
-from stock_screener.data.data_models.filter import FilterRule as rule
+from stock_screener.data.models.filter import FilterRule as rule
 
 mask = rule.to_mask(df)
 df = df[mask]

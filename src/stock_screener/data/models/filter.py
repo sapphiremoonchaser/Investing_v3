@@ -1,4 +1,6 @@
 """Pydantic Class for custom filter rules.
+    Models define what a filter is
+    Services define how it runs
 """
 import operator
 from typing import Literal
