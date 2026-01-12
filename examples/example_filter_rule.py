@@ -1,4 +1,4 @@
-from src.stock_screener.data_models.filter import FilterRule
+from stock_screener.data.data_models.filter import FilterRule
 
 rule = FilterRule(
     field='dividend_yield',

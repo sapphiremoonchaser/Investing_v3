@@ -1,5 +1,5 @@
-from stock_screener.data_models.filter import FilterRule
-from stock_screener.data_models.preset import ScreenerPreset
+from stock_screener.data.data_models.filter import FilterRule
+from stock_screener.data.data_models import ScreenerPreset
 
 COVERED_CALL_PRESET = ScreenerPreset(
     name='Covered Call',
