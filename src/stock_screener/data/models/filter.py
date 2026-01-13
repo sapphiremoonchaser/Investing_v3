@@ -11,7 +11,7 @@ from pydantic import (
     Field
 )
 
-from stock_screener.data.enum.stock_field import StockField
+from stock_screener.data.enums.stock_field import StockField
 
 Operator = Literal['>', '<', '>=', '<=', '==']
 
