@@ -2,6 +2,7 @@
     Models define what a filter is
     Services define how it runs
 """
+from dataclasses import fields
 from typing import Literal
 
 from pydantic import (
@@ -24,13 +25,12 @@ class FilterRule(BaseModel):
             return f'{self.field} {self.operator} {self.value:.2%}'
         return f'{self.field} {self.operator} {self.value}'
 
-    # # Good for debugging
-    # def __repr__(self) -> str:
-    #     return (
-    #         f"FilterRule(field={self.field!r}, "
-    #         f"operator={self.operator!r}, "
-    #         f"value={self.value!r})"
-    #     )
+    # Good for debugging
+    def __repr__(self) -> str:
+        fields = ", ".join(
+            f"{k}={v!r}" for k, v in self.model_data().items()
+        )
+        return f"{self.__class__.__name__}({fields})"
 
     def label(self) -> str:
         # Percentage formatting with 0 decimal places
