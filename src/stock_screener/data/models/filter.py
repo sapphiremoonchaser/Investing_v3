@@ -16,7 +16,7 @@ Operator = Literal['>', '<', '>=', '<=', '==']
 class FilterRule(BaseModel):
     field: StockField
     operator: Operator
-    value: float | int
+    value: float | int | str
 
     # Good for human readability
     def __str__(self) -> str:

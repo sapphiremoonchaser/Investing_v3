@@ -25,3 +25,5 @@ def apply_filters(
         filtered_df = filtered_df[mask]
 
     return filtered_df
+
+

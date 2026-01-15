@@ -7,3 +7,4 @@ class StockField(str, Enum):
     pe_ratio = "pe_ratio"
     pb_ratio = "pb_ratio"
     price ="price"
+    sector = "sector"
