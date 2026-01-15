@@ -1,5 +1,3 @@
-from unittest import result
-
 import pandas as pd
 
 from stock_screener.data.models.filter import FilterRule
@@ -7,16 +5,21 @@ from stock_screener.data.services.filtering.pandas import rule_to_mask
 
 
 def test_apply_filter_greater_than():
+    # This is a dataframe of values to check
     df = pd.DataFrame({
         'pe_ratio': [5, 10,15]
     })
 
+    # This is the rule to check each value for
+    # Ex: Is pe_ratio > 10 for position 0 (5)? False
     rule = FilterRule(
         field='pe_ratio',
         operator='>',
         value=10
     )
 
+    # Take the rule format to something pandas can handle
+    # Ex: > -> operator.gt
     mask = rule_to_mask(rule, df)
 
     # Correct return type
