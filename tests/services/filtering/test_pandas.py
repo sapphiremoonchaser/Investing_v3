@@ -1,4 +1,5 @@
 import pandas as pd
+import pytest
 
 from stock_screener.data.models.filter import FilterRule
 from stock_screener.data.services.filtering.pandas import rule_to_mask
@@ -232,3 +233,21 @@ def test_apply_filter_equal_to():
     # Works for filtering
     filtered = df[mask]
     assert filtered['pe_ratio'].tolist() == [10]
+
+
+def test_apply_filter_invalid_operator():
+    """This keeps invalid operators from going into my operator map.
+    :return:
+    """
+    df = pd.DataFrame({
+        'pe_ratio': [5, 10, 15]
+    })
+
+    rule = FilterRule(
+        field='pe_ratio',
+        operator='!==',
+        value=10
+    )
+
+    with pytest.raises(KeyError):
+        rule_to_mask(rule, df)
