@@ -14,11 +14,9 @@ Behaviors that matter:
 
 # Imports
 import pandas as pd
-from pycparser.ply.yacc import resultlimit
 
 from stock_screener.data.models.filter import FilterRule
 from stock_screener.data.services.screener import apply_filters
-from stock_screener.data.services.filtering.pandas import rule_to_mask
 
 def test_apply_filters_multiple_rules_and_logic():
     # Create an arbitrary dataframe to test
@@ -55,8 +53,11 @@ def test_apply_filters_multiple_rules_and_logic():
     assert result.iloc[0]['sector'] == 'Tech'
 
 
-# Testing that no rules returns the original dataframe
 def test_apply_filters_no_rules_returns_original_df():
+    """Testing for cases where no rules are applied.
+        Expected result is the original dataframe
+    :return:
+    """
     df = pd.DataFrame({
         "a": [1, 2, 3]
     })
@@ -65,4 +66,25 @@ def test_apply_filters_no_rules_returns_original_df():
 
     pd.testing.assert_frame_equal(result, df)
 
+
+def test_apply_filters_no_matches_returns_empty_df_same_schema():
+    """Testing cases with no matches. Expected result is an empty dataframe.
+    :return:
+    """
+    df = pd.DataFrame({
+        "pe_ratio": [1, 2, 3]
+    })
+
+    rules = [
+        FilterRule(
+            field='pe_ratio',
+            operator='>',
+            value=100
+        )
+    ]
+
+    result = apply_filters(df=df, rules=rules)
+
+    assert result.empty
+    assert list(result.columns) == ['pe_ratio']
 
