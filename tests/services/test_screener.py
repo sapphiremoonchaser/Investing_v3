@@ -14,6 +14,7 @@ Behaviors that matter:
 
 # Imports
 import pandas as pd
+from pycparser.ply.yacc import resultlimit
 
 from stock_screener.data.models.filter import FilterRule
 from stock_screener.data.services.screener import apply_filters
@@ -54,5 +55,14 @@ def test_apply_filters_multiple_rules_and_logic():
     assert result.iloc[0]['sector'] == 'Tech'
 
 
+# Testing that no rules returns the original dataframe
+def test_apply_filters_no_rules_returns_original_df():
+    df = pd.DataFrame({
+        "a": [1, 2, 3]
+    })
+
+    result = apply_filters(df=df, rules=[])
+
+    pd.testing.assert_frame_equal(result, df)
 
 
