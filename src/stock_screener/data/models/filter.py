@@ -23,8 +23,12 @@ class FilterRule(BaseModel):
         field = self.field.value
 
         # if dividend_yield format with 2 decimal places
-        if "yield" in field:
-            return f'{field} {self.operator} {self.value:.2%}'
+        if self.field == 'dividend_yield':
+            return f"Dividend Yield {self.operator} {self.value:.2%}"
+
+        # Metrics in Billions of $
+        if self.field == 'market_cap':
+            return f"Market Cap {self.operator} {self.value/1e9:.1f}B"
 
         return f'{field} {self.operator} {self.value}'
 
@@ -38,7 +42,7 @@ class FilterRule(BaseModel):
     def label(self) -> str:
         # Percentage formatting with 0 decimal places
         if self.field == 'dividend_yield':
-            return f"Dividend Yield {self.operator} {self.value:.0%}"
+            return f"Dividend Yield {self.operator} {self.value:.2%}"
 
         # Metrics in Billions of $
         if self.field == 'market_cap':

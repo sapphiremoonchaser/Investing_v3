@@ -4,8 +4,8 @@
 - [x] Rejects invalid field
 - [x] Rejects invalid operator
 - [x] __str__ formatting
-- [ ] label() market cap formatting
-- [ ] label() dividend yield formatting
+- [x] label() market cap formatting
+- [x] label() dividend yield formatting
 
 ## rule_to_mask
 - [x] >
