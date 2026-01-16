@@ -21,3 +21,15 @@ def test_filter_rule_invalid():
             operator='INVALID',
             value=10
         )
+
+
+def test_filter_rule_str_numeric():
+    rule = FilterRule(
+        field='pe_ratio',
+        operator='>',
+        value=10
+    )
+
+    assert str(rule) == 'pe_ratio > 10'
+
+

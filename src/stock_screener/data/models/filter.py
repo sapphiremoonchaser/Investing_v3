@@ -20,10 +20,13 @@ class FilterRule(BaseModel):
 
     # Good for human readability
     def __str__(self) -> str:
+        field = self.field.value
+
         # if dividend_yield format with 2 decimal places
-        if "yield" in self.field:
-            return f'{self.field} {self.operator} {self.value:.2%}'
-        return f'{self.field} {self.operator} {self.value}'
+        if "yield" in field:
+            return f'{field} {self.operator} {self.value:.2%}'
+
+        return f'{field} {self.operator} {self.value}'
 
     # Good for debugging
     def __repr__(self) -> str:
