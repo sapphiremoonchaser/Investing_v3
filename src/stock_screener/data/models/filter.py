@@ -16,14 +16,21 @@ Operator = Literal['>', '<', '>=', '<=', '==']
 class FilterRule(BaseModel):
     field: StockField
     operator: Operator
-    value: float | int
+    value: float | int | str
 
     # Good for human readability
     def __str__(self) -> str:
+        field = self.field.value
+
         # if dividend_yield format with 2 decimal places
-        if "yield" in self.field:
-            return f'{self.field} {self.operator} {self.value:.2%}'
-        return f'{self.field} {self.operator} {self.value}'
+        if self.field == 'dividend_yield':
+            return f"Dividend Yield {self.operator} {self.value:.2%}"
+
+        # Metrics in Billions of $
+        if self.field == 'market_cap':
+            return f"Market Cap {self.operator} {self.value/1e9:.1f}B"
+
+        return f'{field} {self.operator} {self.value}'
 
     # Good for debugging
     def __repr__(self) -> str:
@@ -35,7 +42,7 @@ class FilterRule(BaseModel):
     def label(self) -> str:
         # Percentage formatting with 0 decimal places
         if self.field == 'dividend_yield':
-            return f"Dividend Yield {self.operator} {self.value:.0%}"
+            return f"Dividend Yield {self.operator} {self.value:.2%}"
 
         # Metrics in Billions of $
         if self.field == 'market_cap':
