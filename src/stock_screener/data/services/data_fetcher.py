@@ -1,15 +1,13 @@
 import yfinance as yf
 import pandas as pd
-from typing import List, Optional
-
-from coverage.debug import info_header
+from typing import List
 
 from stock_screener.data.enums.stock_field import StockField
 
 
 def fetch_stock_data(
         ticker: str,
-        fields: List[StockField] = list(StockField)
+        fields: List[StockField]
 ) -> pd.DataFrame:
     """
     Fetches fundamental info for a single ticker.
