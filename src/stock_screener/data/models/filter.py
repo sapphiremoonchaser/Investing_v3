@@ -2,7 +2,6 @@
     Models define what a filter is
     Services define how it runs
 """
-from dataclasses import fields
 from typing import Literal
 
 from pydantic import (
