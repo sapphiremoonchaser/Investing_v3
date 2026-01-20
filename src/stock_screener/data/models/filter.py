@@ -33,28 +33,47 @@ class FilterRule(BaseModel):
     #     return f"{self.__class__.__name__}({fields})"
 
     def label(self) -> str:
-        # Percentage formatting with 0 decimal places
+        # Price label formatting
         if self.field == StockField.price:
             return f'Price {self.operator} ${self.value:,.2f}'
 
+        # Avg Daily Volume label formatting (M and K)
         if self.field == StockField.avg_daily_volume:
-            if self.value >= 100_000:
+            if self.value >= 1_000_000:
                 millions = self.value / 1_000_000
                 return f'Avg Daily Volume {self.operator} {millions:,.1f}M'
 
-            elif self.value < 100:
-                return f'Avg Daily Volume {self.operator} {self.value:,.0f}'
+            elif self.value >= 1_000:
+                thousands = self.value / 1_000
+                return f'Avg Daily Volume {self.operator} {thousands:,.0f}K'
 
             else:
-                thousands = self.value / 1_000
-                return f'Avg Daily Volume {self.operator} {thousands:,.1f}K'
+                return f'Avg Daily Volume {self.operator} {self.value:,.0f}'
 
+        # Dividend Yield label formatting (% with no decimal)
         if self.field == StockField.dividend_yield:
             return f"Dividend Yield {self.operator} {self.value:.0%}"
 
-        # Metrics in Billions of $
+        # Market Cap label formatting (B, M, K)
         if self.field == StockField.market_cap:
-            return f"Market Cap {self.operator} {self.value/1e9:.1f}B"
+            if self.value >= 1_000_000_000:
+                billions = self.value / 1_000_000_000
+                return f'Market Cap {self.operator} ${billions:,.1f}B'
+
+            elif self.value >= 1_000_000:
+                millions = self.value / 1_000_000
+                return f'Market Cap {self.operator} ${millions:,.1f}M'
+
+            elif self.value >= 1_000:
+                thousands = self.value / 1_000
+                return f'Market Cap {self.operator} ${thousands:,.0f}K'
+
+            else:
+                return f'Market Cap {self.operator} ${self.value:,.0f}'
+
+
+
+
 
         # Anything else, just remove the '_' and repalce with blank space
         return f"{self.field.replace('_', ' ').title()} {self.operator} {self.value}"
