@@ -34,12 +34,19 @@ from stock_screener.data.enums.stock_field import StockField
         # market_cap special formatting (billions, 1 decimal place)
         (StockField.market_cap, "==", 4_500_000_000, "Market Cap == $4.5B"),
         (StockField.market_cap, "<=", 2_100_000, "Market Cap <= $2.1M"),
-        (StockField.market_cap, ">=", 200_000, "Market Cap >= $200K")
+        (StockField.market_cap, ">=", 200_000, "Market Cap >= $200K"),
 
+        # PE Ratio special formatting (1 decimal)
+        (StockField.pe_ratio, "==", 10.0, "PE Ratio == 10.0"),
+        (StockField.pe_ratio, "<=", 8.7, "PE Ratio <= 8.7"),
+        (StockField.pe_ratio, ">=", 8.89, "PE Ratio >= 8.9"),
+        (StockField.pe_ratio, "==", 0, "PE Ratio == 0.0"),
 
-        # Regular numeric fields (title, case, raw value)
-        # pe_ratio, pb_ratio
-
+        # PB Ratio special formatting (1 decimal)
+        (StockField.pe_ratio, "==", 10.0, "PE Ratio == 10.0"),
+        (StockField.pe_ratio, "<=", 8.7, "PE Ratio <= 8.7"),
+        (StockField.pe_ratio, ">=", 8.89, "PE Ratio >= 8.9"),
+        (StockField.pe_ratio, "==", 0, "PE Ratio == 0.0"),
 
         # String field (sector, no special formatting)
 

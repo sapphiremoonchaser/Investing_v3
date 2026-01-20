@@ -75,14 +75,13 @@ class FilterRule(BaseModel):
             else:
                 return f'Market Cap {self.operator} ${self.value:,.0f}'
 
-
         # P/E ratio label formatting (2 decimals)
         if self.field == StockField.pe_ratio:
-            return f'PE Ratio {self.operator} {self.value:,.2}'
+            return f'PE Ratio {self.operator} {self.value:,.1f}'
 
-
-
-
+        # P/B ratio label formatting (2 decimals)
+        if self.field == StockField.pb_ratio:
+            return f'PB Ratio {self.operator} {self.value:,.1f}'
 
         # Anything else, just remove the '_' and repalce with blank space
         return f"{self.field.replace('_', ' ').title()} {self.operator} {self.value}"
