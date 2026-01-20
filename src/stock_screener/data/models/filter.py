@@ -4,6 +4,7 @@
 """
 from typing import Literal
 
+from pandas.compat.numpy.function import validate_groupby_func
 from pydantic import (
     BaseModel
 )
@@ -37,7 +38,16 @@ class FilterRule(BaseModel):
             return f'Price {self.operator} ${self.value:,.2f}'
 
         if self.field == StockField.avg_daily_volume:
-            return
+            if self.value >= 100_000:
+                millions = self.value / 1_000_000
+                return f'Avg Daily Volume {self.operator} {millions:,.1f}M'
+
+            elif self.value < 100:
+                return f'Avg Daily Volume {self.operator} {self.value:,.0f}'
+
+            else:
+                thousands = self.value / 1_000
+                return f'Avg Daily Volume {self.operator} {thousands:,.1f}K'
 
         if self.field == StockField.dividend_yield:
             return f"Dividend Yield {self.operator} {self.value:.0%}"

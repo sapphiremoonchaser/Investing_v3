@@ -22,10 +22,14 @@ from stock_screener.data.enums.stock_field import StockField
         (StockField.dividend_yield, ">=", 0, "Dividend Yield >= 0%"),
         (StockField.dividend_yield, "<=", 0, "Dividend Yield <= 0%"),
 
-
         # avg_daily_volume special formatting (thousands)
-        (StockField.avg_daily_volume, "==", 200000, "Avg Vol == 200,000")
-
+        (StockField.avg_daily_volume, "==", 2_100_000, "Avg Daily Volume == 2.1M"),
+        (StockField.avg_daily_volume, "<=", 200_000, "Avg Daily Volume <= 0.2M"),
+        (StockField.avg_daily_volume, ">=", 200, "Avg Daily Volume >= 0.2K"),
+        (StockField.avg_daily_volume, ">=", 99, "Avg Daily Volume >= 99"),
+        (StockField.avg_daily_volume, "==", 0, "Avg Daily Volume == 0"),
+        (StockField.avg_daily_volume, ">=", 0, "Avg Daily Volume >= 0"),
+        (StockField.avg_daily_volume, "<=", 0, "Avg Daily Volume <= 0")
 
         # market_cap special formatting (billions, 1 decimal place)
 
