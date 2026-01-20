@@ -43,10 +43,10 @@ from stock_screener.data.enums.stock_field import StockField
         (StockField.pe_ratio, "==", 0, "PE Ratio == 0.0"),
 
         # PB Ratio special formatting (1 decimal)
-        (StockField.pe_ratio, "==", 10.0, "PE Ratio == 10.0"),
-        (StockField.pe_ratio, "<=", 8.7, "PE Ratio <= 8.7"),
-        (StockField.pe_ratio, ">=", 8.89, "PE Ratio >= 8.9"),
-        (StockField.pe_ratio, "==", 0, "PE Ratio == 0.0"),
+        (StockField.pb_ratio, "==", 10.0, "PB Ratio == 10.0"),
+        (StockField.pb_ratio, "<=", 8.7, "PB Ratio <= 8.7"),
+        (StockField.pb_ratio, ">=", 8.89, "PB Ratio >= 8.9"),
+        (StockField.pb_ratio, "==", 0, "PB Ratio == 0.0"),
 
         # String field (sector, no special formatting)
 

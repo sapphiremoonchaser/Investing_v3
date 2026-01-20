@@ -33,16 +33,28 @@ class FilterRule(BaseModel):
     #     return f"{self.__class__.__name__}({fields})"
 
     def label(self) -> str:
+        """Give a label to the equality statemtn in clear english.
+            Formatting Operations
+                - Price: $29.43
+                - Avg Daily Volume: 2.1M, 2K, 200
+                - Dividend Yield: 3%
+                - Market Cap: $2B, $2M, $2K, 200
+                - PE Ratio: 8.5
+                - PB Ratio: 8.9
+        :return:
+        """
         # Price label formatting
         if self.field == StockField.price:
             return f'Price {self.operator} ${self.value:,.2f}'
 
         # Avg Daily Volume label formatting (M and K)
         if self.field == StockField.avg_daily_volume:
+            # Formatting when more than 1 million
             if self.value >= 1_000_000:
                 millions = self.value / 1_000_000
                 return f'Avg Daily Volume {self.operator} {millions:,.1f}M'
 
+            # Formatting for more than 1,000, less than 1 million
             elif self.value >= 1_000:
                 thousands = self.value / 1_000
                 return f'Avg Daily Volume {self.operator} {thousands:,.0f}K'
