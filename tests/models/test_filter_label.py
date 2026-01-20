@@ -20,10 +20,11 @@ from stock_screener.data.enums.stock_field import StockField
         (StockField.dividend_yield, ">=", 0.01, "Dividend Yield >= 1%"),
         (StockField.dividend_yield, "==", 0, "Dividend Yield == 0%"),
         (StockField.dividend_yield, ">=", 0, "Dividend Yield >= 0%"),
-        (StockField.dividend_yield, "<=", 0, "Dividend Yield <= 0%")
+        (StockField.dividend_yield, "<=", 0, "Dividend Yield <= 0%"),
 
 
         # avg_daily_volume special formatting (thousands)
+        (StockField.avg_daily_volume, "==", 200000, "Avg Vol == 200,000")
 
 
         # market_cap special formatting (billions, 1 decimal place)

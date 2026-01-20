@@ -33,14 +33,17 @@ class FilterRule(BaseModel):
 
     def label(self) -> str:
         # Percentage formatting with 0 decimal places
-        if self.field == 'price':
+        if self.field == StockField.price:
             return f'Price {self.operator} ${self.value:,.2f}'
 
-        if self.field == 'dividend_yield':
+        if self.field == StockField.avg_daily_volume:
+            return
+
+        if self.field == StockField.dividend_yield:
             return f"Dividend Yield {self.operator} {self.value:.0%}"
 
         # Metrics in Billions of $
-        if self.field == 'market_cap':
+        if self.field == StockField.market_cap:
             return f"Market Cap {self.operator} {self.value/1e9:.1f}B"
 
         # Anything else, just remove the '_' and repalce with blank space
