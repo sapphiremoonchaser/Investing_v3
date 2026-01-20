@@ -56,20 +56,29 @@ class FilterRule(BaseModel):
 
         # Market Cap label formatting (B, M, K)
         if self.field == StockField.market_cap:
+            # Formatting when more than a billion
             if self.value >= 1_000_000_000:
                 billions = self.value / 1_000_000_000
                 return f'Market Cap {self.operator} ${billions:,.1f}B'
 
+            # Formatting for more than a million, less than a billion
             elif self.value >= 1_000_000:
                 millions = self.value / 1_000_000
                 return f'Market Cap {self.operator} ${millions:,.1f}M'
 
+            # Formatting for more than 1,000, less than a million
             elif self.value >= 1_000:
                 thousands = self.value / 1_000
                 return f'Market Cap {self.operator} ${thousands:,.0f}K'
 
+            # Formatting for less than 1,000
             else:
                 return f'Market Cap {self.operator} ${self.value:,.0f}'
+
+
+        # P/E ratio label formatting (2 decimals)
+        if self.field == StockField.pe_ratio:
+            return f'PE Ratio {self.operator} {self.value:,.2}'
 
 
 

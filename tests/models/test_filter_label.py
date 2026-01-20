@@ -44,8 +44,7 @@ from stock_screener.data.enums.stock_field import StockField
         # String field (sector, no special formatting)
 
 
-        # Mixed / edge cases
-        # Dividend yeild = 0 and market_cap = 0, and price = 0
+        # Mixed
     ]
 )
 def test_filter_rule_label(
