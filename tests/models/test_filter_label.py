@@ -7,7 +7,11 @@ from stock_screener.data.enums.stock_field import StockField
     "field, operator, value, expected_label",
     [
         # price special formatting (dollar sign, 2 decimal places)
-
+        (StockField.price, "==", 208.23, "Price == 208.23")
+        # (StockField.price, "<=", 208.23, "Price <= 208.23"),
+        # (StockField.price, ">=", 208.23, "Price >= 208.23"),
+        # (StockField.price, "<=", 0, "Price <= 0.00"),
+        # (StockField.price, ">=", 0, "Price >= 0.00"),
 
         # dividend_yield special formatting (percentage, 0 decimal places)
 
