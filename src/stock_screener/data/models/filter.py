@@ -33,6 +33,9 @@ class FilterRule(BaseModel):
 
     def label(self) -> str:
         # Percentage formatting with 0 decimal places
+        if self.field == 'price':
+            return f'Price {self.operator} ${self.value:,.2f}'
+
         if self.field == 'dividend_yield':
             return f"Dividend Yield {self.operator} {self.value:.0%}"
 

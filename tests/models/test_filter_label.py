@@ -7,13 +7,20 @@ from stock_screener.data.enums.stock_field import StockField
     "field, operator, value, expected_label",
     [
         # price special formatting (dollar sign, 2 decimal places)
-        (StockField.price, "==", 208.23, "Price == 208.23")
-        # (StockField.price, "<=", 208.23, "Price <= 208.23"),
-        # (StockField.price, ">=", 208.23, "Price >= 208.23"),
-        # (StockField.price, "<=", 0, "Price <= 0.00"),
-        # (StockField.price, ">=", 0, "Price >= 0.00"),
+        (StockField.price, "==", 208.23, "Price == $208.23"),
+        (StockField.price, "<=", 0.124, "Price <= $0.12"),
+        (StockField.price, ">=", 1234.56, "Price >= $1,234.56"),
+        (StockField.price, "<=", 0, "Price <= $0.00"),
+        (StockField.price, ">=", 0, "Price >= $0.00"),
+        (StockField.price, "==", 0, "Price == $0.00"),
 
         # dividend_yield special formatting (percentage, 0 decimal places)
+        (StockField.dividend_yield, "==", 0.03, "Dividend Yield == 3%"),
+        (StockField.dividend_yield, "<=", 0.12, "Dividend Yield <= 12%"),
+        (StockField.dividend_yield, ">=", 0.01, "Dividend Yield >= 1%"),
+        (StockField.dividend_yield, "==", 0, "Dividend Yield == 0%"),
+        (StockField.dividend_yield, ">=", 0, "Dividend Yield >= 0%"),
+        (StockField.dividend_yield, "<=", 0, "Dividend Yield <= 0%")
 
 
         # avg_daily_volume special formatting (thousands)
@@ -45,4 +52,4 @@ def test_filter_rule_label(
         value=value
     )
 
-    assert rule.label == expected_label
+    assert rule.label() == expected_label
