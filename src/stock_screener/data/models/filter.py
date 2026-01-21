@@ -4,7 +4,6 @@
 """
 from typing import Literal
 
-from pandas.compat.numpy.function import validate_groupby_func
 from pydantic import (
     BaseModel
 )
