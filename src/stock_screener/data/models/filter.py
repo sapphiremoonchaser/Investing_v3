@@ -15,14 +15,21 @@ Operator = Literal['>', '<', '>=', '<=', '==']
 class FilterRule(BaseModel):
     field: StockField
     operator: Operator
-    value: float | int
+    value: float | int | str
 
     # Good for human readability
     def __str__(self) -> str:
+        field = self.field.value
+
         # if dividend_yield format with 2 decimal places
-        if "yield" in self.field:
-            return f'{self.field} {self.operator} {self.value:.2%}'
-        return f'{self.field} {self.operator} {self.value}'
+        if self.field == 'dividend_yield':
+            return f"Dividend Yield {self.operator} {self.value:.2%}"
+
+        # Metrics in Billions of $
+        if self.field == 'market_cap':
+            return f"Market Cap {self.operator} {self.value/1e9:.1f}B"
+
+        return f'{field} {self.operator} {self.value}'
 
     # # Good for debugging
     # def __repr__(self) -> str:
@@ -32,38 +39,9 @@ class FilterRule(BaseModel):
     #     return f"{self.__class__.__name__}({fields})"
 
     def label(self) -> str:
-        """Give a label to the equality statemtn in clear english.
-            Formatting Operations
-                - Price: $29.43
-                - Avg Daily Volume: 2.1M, 2K, 200
-                - Dividend Yield: 3%
-                - Market Cap: $2B, $2M, $2K, 200
-                - PE Ratio: 8.5
-                - PB Ratio: 8.9
-        :return:
-        """
-        # Price label formatting
-        if self.field == StockField.price:
-            return f'Price {self.operator} ${self.value:,.2f}'
-
-        # Avg Daily Volume label formatting (M and K)
-        if self.field == StockField.avg_daily_volume:
-            # Formatting when more than 1 million
-            if self.value >= 1_000_000:
-                millions = self.value / 1_000_000
-                return f'Avg Daily Volume {self.operator} {millions:,.1f}M'
-
-            # Formatting for more than 1,000, less than 1 million
-            elif self.value >= 1_000:
-                thousands = self.value / 1_000
-                return f'Avg Daily Volume {self.operator} {thousands:,.0f}K'
-
-            else:
-                return f'Avg Daily Volume {self.operator} {self.value:,.0f}'
-
-        # Dividend Yield label formatting (% with no decimal)
-        if self.field == StockField.dividend_yield:
-            return f"Dividend Yield {self.operator} {self.value:.0%}"
+        # Percentage formatting with 0 decimal places
+        if self.field == 'dividend_yield':
+            return f"Dividend Yield {self.operator} {self.value:.2%}"
 
         # Market Cap label formatting (B, M, K)
         if self.field == StockField.market_cap:

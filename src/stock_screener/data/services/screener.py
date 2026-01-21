@@ -6,6 +6,8 @@
 from stock_screener.data.models.filter import FilterRule
 import pandas as pd
 
+from stock_screener.data.services.filtering.pandas import rule_to_mask
+
 
 def apply_filters(
         df: pd.DataFrame,
@@ -21,7 +23,9 @@ def apply_filters(
     filtered_df = df.copy()
 
     for rule in rules:
-        mask = rule.to_pandas_mask(filtered_df)
+        mask = rule_to_mask(rule, filtered_df)
         filtered_df = filtered_df[mask]
 
     return filtered_df
+
+
