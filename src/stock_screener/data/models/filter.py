@@ -5,7 +5,7 @@ This module contains the FilterRule model, which represents a single screening
 condition applied to stock data. A 'filter rule' consists of:
 
     - A SockField (the metric being evaluated)
-    - A comparison operator (>, <, <=, >=, !=, ==)
+    - A comparison operator (>, <, <=, >=, ==)
     - A comparison value
 
 FilterRule serves as a structured, validated representation of user-defined screening
@@ -42,14 +42,10 @@ class FilterRule(BaseModel):
         if self.field == 'market_cap':
             return f"Market Cap {self.operator} {self.value/1e9:.1f}B"
 
+        # ToDo: add formatting for rest of metrics
+
         return f'{field} {self.operator} {self.value}'
 
-    # # Good for debugging
-    # def __repr__(self) -> str:
-    #     fields = ", ".join(
-    #         f"{k}={v!r}" for k, v in self.model_data().items()
-    #     )
-    #     return f"{self.__class__.__name__}({fields})"
 
     def label(self) -> str:
         # Percentage formatting with 0 decimal places
