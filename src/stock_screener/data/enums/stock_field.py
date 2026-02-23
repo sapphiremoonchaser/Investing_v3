@@ -22,5 +22,4 @@ class StockField(str, Enum):
     market_cap = "market_cap"
     pe_ratio = "pe_ratio"
     pb_ratio = "pb_ratio"
-    price ="price"
     sector = "sector"
