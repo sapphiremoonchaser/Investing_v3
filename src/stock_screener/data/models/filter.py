@@ -2,7 +2,6 @@
     Models define what a filter is
     Services define how it runs
 """
-from dataclasses import fields
 from typing import Literal
 
 from pydantic import (
@@ -32,21 +31,46 @@ class FilterRule(BaseModel):
 
         return f'{field} {self.operator} {self.value}'
 
-    # Good for debugging
-    def __repr__(self) -> str:
-        fields = ", ".join(
-            f"{k}={v!r}" for k, v in self.model_data().items()
-        )
-        return f"{self.__class__.__name__}({fields})"
+    # # Good for debugging
+    # def __repr__(self) -> str:
+    #     fields = ", ".join(
+    #         f"{k}={v!r}" for k, v in self.model_data().items()
+    #     )
+    #     return f"{self.__class__.__name__}({fields})"
 
     def label(self) -> str:
         # Percentage formatting with 0 decimal places
         if self.field == 'dividend_yield':
             return f"Dividend Yield {self.operator} {self.value:.2%}"
 
-        # Metrics in Billions of $
-        if self.field == 'market_cap':
-            return f"Market Cap {self.operator} {self.value/1e9:.1f}B"
+        # Market Cap label formatting (B, M, K)
+        if self.field == StockField.market_cap:
+            # Formatting when more than a billion
+            if self.value >= 1_000_000_000:
+                billions = self.value / 1_000_000_000
+                return f'Market Cap {self.operator} ${billions:,.1f}B'
+
+            # Formatting for more than a million, less than a billion
+            elif self.value >= 1_000_000:
+                millions = self.value / 1_000_000
+                return f'Market Cap {self.operator} ${millions:,.1f}M'
+
+            # Formatting for more than 1,000, less than a million
+            elif self.value >= 1_000:
+                thousands = self.value / 1_000
+                return f'Market Cap {self.operator} ${thousands:,.0f}K'
+
+            # Formatting for less than 1,000
+            else:
+                return f'Market Cap {self.operator} ${self.value:,.0f}'
+
+        # P/E ratio label formatting (2 decimals)
+        if self.field == StockField.pe_ratio:
+            return f'PE Ratio {self.operator} {self.value:,.1f}'
+
+        # P/B ratio label formatting (2 decimals)
+        if self.field == StockField.pb_ratio:
+            return f'PB Ratio {self.operator} {self.value:,.1f}'
 
         # Anything else, just remove the '_' and repalce with blank space
         return f"{self.field.replace('_', ' ').title()} {self.operator} {self.value}"

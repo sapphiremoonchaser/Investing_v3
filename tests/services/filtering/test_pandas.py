@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 
 from stock_screener.data.models.filter import FilterRule
-from stock_screener.data.services.filtering.pandas import rule_to_mask
+from stock_screener.services.filtering.pandas import rule_to_mask
 
 
 @pytest.mark.parametrize(
