@@ -15,6 +15,19 @@ JSON serializations, and API integrations.
 from enum import Enum
 
 class StockField(str, Enum):
+    """
+    StockField defines a set of attributes that can be requested, filtered,
+    or displayed within the stock analyzer system. These fields act as a contract
+    between:
+
+    - Data providers (i.e. yfinance)
+    - Screening and filtering services
+    - Reporting components
+    - User Interfaces
+
+    Using this enum instead of raw strings improves safety, prevents typing errors,
+    and centralizes supported stock attributes to a single source of truth.
+    """
     ticker = 'ticker'
     price = 'price'
     avg_daily_volume = 'avg_daily_volume'
