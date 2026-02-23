@@ -1,12 +1,25 @@
-"""Pydantic Class for custom filter rules.
-    Models define what a filter is
-    Services define how it runs
+"""
+Defines filtering rules used by the stock screener.
+
+This module contains the FilterRule model, which represents a single screening
+condition applied to stock data. A 'filter rule' consists of:
+
+    - A SockField (the metric being evaluated)
+    - A comparison operator (>, <, <=, >=, !=, ==)
+    - A comparison value
+
+FilterRule serves as a structured, validated representation of user-defined screening
+criteria. It's used by the screener to dynamically construct and apply filters.
+
+The model includes:
+
+    - Human-readable string formatting (__str__)
+    - UI-friendly label formatting (label)
+    - Pydantic validation
+    - Enum-backed field validation
 """
 from typing import Literal
-
-from pydantic import (
-    BaseModel
-)
+from pydantic import BaseModel
 
 from stock_screener.data.enums.stock_field import StockField
 
