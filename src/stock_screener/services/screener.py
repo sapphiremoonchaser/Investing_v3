@@ -6,7 +6,7 @@
 from stock_screener.data.models.filter import FilterRule
 import pandas as pd
 
-from stock_screener.data.services.filtering.pandas import rule_to_mask
+from stock_screener.services.filtering.pandas import rule_to_mask
 
 
 def apply_filters(
